@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XAI-AutoSnort | CIC-IDS-2017 Edition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>XAI-Powered Snort Rule Generator</h1>
+        </header>
+
+        <div class="card form-card">
+            <h2>Analyze Network Traffic</h2>
+            <p>Enter the network flow data below. The model will predict the traffic type and generate a defensive Snort rule.</p>
+            
+            <form action="/" method="post">
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="Protocol">Protocol (For Snort Rule)</label>
+                        <select class="form-control" id="Protocol" name="Protocol" required>
+                            <option value="6">6 (TCP)</option>
+                            <option value="17">17 (UDP)</option>
+                            <option value="1">1 (ICMP)</option>
+                        </select>
+                    </div>
+                    {% for feature in feature_names %}
+                    <div class="form-group">
+                        <label for="{{ feature }}">{{ feature.replace("_", " ").title() }}</label>
+                        <input type="number" step="any" class="form-control" id="{{ feature }}" name="{{ feature }}" required value="0">
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <button type="submit" class="btn-submit">Analyze Traffic</button>
+            </form>
+        </div>
+
+        {% if error %}
+            <div class="card error-card">
+                <h2>Error</h2>
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if show_results %}
+        <div class="card results-container" id="results">
+            <h2>Analysis Report</h2>
+
+            <div class="result-section">
+                <h3><span class="emoji">🎯</span> AI Prediction</h3>
+                <p>The model classifies this traffic as: <span class="prediction-text">{{ prediction }}</span></p>
+                <p><strong>Confidence:</strong> {{ "%.1f"|format(confidence) }}%</p>
+                
+                {% if confidence_scores %}
+                <div class="confidence-breakdown">
+                    <h4>Prediction Breakdown:</h4>
+                    <div class="confidence-bars">
+                        {% for class_name, score in confidence_scores.items() %}
+                        {% if score > 0.01 %}  <div class="confidence-item">
+                            <span class="class-name">{{ class_name }}</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: {{ (score * 100)|int }}%; background-color: {% if class_name == prediction %}#e74c3c{% else %}#95a5a6{% endif %};"></div>
+                            </div>
+                            <span class="confidence-percent">{{ "%.1f"|format(score * 100) }}%</span>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="result-section">
+                <h3><span class="emoji">🧠</span> XAI Explanation (Why?)</h3>
+                <p>The model's decision was most influenced by these factors:</p>
+                <ul class="explanation-list">
+                    {% for feature, weight in explanation %}
+                    <li>
+                        <strong>{{ feature }}</strong>
+                        <span class="weight-bar" style="width: {{ (weight|abs * 200)|int }}px; background-color: {% if weight > 0 %}#e74c3c{% else %}#3498db{% endif %};"></span>
+                        <span class="weight-value">({{ "%.4f"|format(weight) }})</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <small>(Red bars push towards attack, Blue bars push towards benign)</small>
+            </div>
+
+            <div class="result-section">
+                <h3><span class="emoji">🛡️</span> Generated Snort Rule</h3>
+                <p>Based on the explanation, the following defensive rule is recommended:</p>
+                <pre class="snort-rule">{{ snort_rule }}</pre>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

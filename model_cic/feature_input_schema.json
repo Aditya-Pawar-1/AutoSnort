@@ -1,0 +1,17 @@
+{
+  "Packet Length Std": "number",
+  "Total Length of Bwd Packets": "number",
+  "Subflow Bwd Bytes": "number",
+  "Destination Port": "number",
+  "Packet Length Variance": "number",
+  "Bwd Packet Length Mean": "number",
+  "Avg Bwd Segment Size": "number",
+  "Bwd Packet Length Max": "number",
+  "Init_Win_bytes_backward": "number",
+  "Total Length of Fwd Packets": "number",
+  "Subflow Fwd Bytes": "number",
+  "Init_Win_bytes_forward": "number",
+  "Average Packet Size": "number",
+  "Packet Length Mean": "number",
+  "Max Packet Length": "number"
+}

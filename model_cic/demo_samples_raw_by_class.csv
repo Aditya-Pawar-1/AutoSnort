@@ -1,0 +1,8 @@
+Label,Packet Length Std,Total Length of Bwd Packets,Subflow Bwd Bytes,Destination Port,Packet Length Variance,Bwd Packet Length Mean,Avg Bwd Segment Size,Bwd Packet Length Max,Init_Win_bytes_backward,Total Length of Fwd Packets,Subflow Fwd Bytes,Init_Win_bytes_forward,Average Packet Size,Packet Length Mean,Max Packet Length
+BENIGN,27.386127875258307,130.0,130.0,80.0,750.0,77.0,77.0,83.0,-1.0,66.0,66.0,118.0,74.25,58.6,90.0
+Bot,3.207134903,18.0,18.0,8080.0,10.28571429,6.0,6.0,6.0,237.0,6.0,6.0,8192.0,9.0,6.0,6.0
+Brute Force,12.28576412,188.0,188.0,21.0,150.94,12.53333333,12.53333333,34.0,227.0,90.0,90.0,29200.0,12.16666667,11.24,34.0
+Dos/Ddos,1566.044355,11595.0,11595.0,80.0,2452494.923,1656.428571,1656.428571,4380.0,229.0,36.0,36.0,256.0,853.8571429,796.9333333,4380.0
+Infiltration,280.701496,174.0,174.0,444.0,78793.88655,6.0,6.0,6.0,1452.0,7020.0,7020.0,255.0,146.7779344,146.710511,1226.0
+PortScan,3.464101615,6.0,6.0,3690.0,12.0,6.0,6.0,6.0,0.0,0.0,0.0,29200.0,3.0,2.0,6.0
+Web Attack,0.0,0.0,0.0,80.0,0.0,0.0,0.0,0.0,28960.0,0.0,0.0,29200.0,0.0,0.0,0.0
